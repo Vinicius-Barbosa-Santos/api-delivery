@@ -10,6 +10,7 @@
   "license": "ISC",
   "description": "API de entregas",
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
     "@types/express": "^5.0.2",
     "@types/node": "^22.15.29",
     "prisma": "^6.8.2",
@@ -20,6 +21,7 @@
   },
   "dependencies": {
     "@prisma/client": "^6.8.2",
+    "bcrypt": "^6.0.0",
     "express": "^5.1.0",
     "express-async-errors": "^3.1.1",
     "tsx": "^4.19.4",
