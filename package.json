@@ -3,15 +3,16 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "tsx watch src/server.ts"
+    "dev": "tsx watch --env-file .env src/server.ts"
   },
   "keywords": [],
-  "author": "",
+  "author": "Vinícius Barbosa Santos",
   "license": "ISC",
-  "description": "",
+  "description": "API de entregas",
   "devDependencies": {
     "@types/express": "^5.0.2",
     "@types/node": "^22.15.29",
+    "prisma": "^6.8.2",
     "ts-node": "^10.9.2",
     "tsup": "^8.5.0",
     "txs": "^1.0.0",
