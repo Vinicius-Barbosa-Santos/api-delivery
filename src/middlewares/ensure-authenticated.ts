@@ -11,7 +11,7 @@ interface TokenPayload {
 export const ensureAuthenticated = (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const authHeader = req.headers.authorization;
@@ -24,7 +24,7 @@ export const ensureAuthenticated = (
 
     const { role, sub: user_id } = verify(
       token,
-      authConfig.jwt.secret
+      authConfig.jwt.secret,
     ) as TokenPayload;
 
     req.user = {
