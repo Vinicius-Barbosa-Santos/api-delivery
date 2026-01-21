@@ -12,6 +12,6 @@ routes.use("/sessions", sessionsRoutes);
 
 routes.use(ensureAuthenticated);
 routes.use("/deliveries", deliveriesRoutes);
-routes.use("/delivery-logs", deliveryLogsRoutes);
+routes.use("/deliveries-logs", deliveryLogsRoutes);
 
 export { routes };
