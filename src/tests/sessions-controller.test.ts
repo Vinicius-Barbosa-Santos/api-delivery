@@ -8,8 +8,8 @@ const createdEmails = new Set<string>();
 
 const mockUser = (overrides: Partial<User> = {}) => ({
   id: "mock-user-id",
-  name: "User",
-  email: "user@example.com",
+  name: "Auth User",
+  email: "auth@example.com",
   password: "hashed",
   role: "customer",
   createdAt: new Date(),
@@ -54,7 +54,7 @@ import { User } from "@prisma/client";
    TESTS
 ======================= */
 
-describe("UserController", () => {
+describe("SessionsController", () => {
   let user_id: string;
 
   afterAll(async () => {
@@ -65,49 +65,23 @@ describe("UserController", () => {
     }
   });
 
-  it("should create a user", async () => {
-    const uniqueEmail = `user+${Date.now()}@example.com`;
+  it("should authenticate a user and return access token", async () => {
+    const uniqueEmail = `auth+${Date.now()}@example.com`;
 
-    const response = await request(app).post("/users").send({
-      name: "User",
+    const userResponse = await request(app).post("/users").send({
+      name: "Auth User",
       email: uniqueEmail,
       password: "123456",
     });
 
-    expect(response.status).toBe(201);
-    expect(response.body).toHaveProperty("id");
-    expect(response.body.name).toBe("User");
+    user_id = userResponse.body.id;
 
-    user_id = response.body.id;
-  });
-
-  it("should not create a user with existing email", async () => {
-    const uniqueEmail = `user+${Date.now()}@example.com`;
-
-    await request(app).post("/users").send({
-      name: "User",
+    const response = await request(app).post("/sessions").send({
       email: uniqueEmail,
       password: "123456",
     });
 
-    const response = await request(app).post("/users").send({
-      name: "Duplicate User",
-      email: uniqueEmail,
-      password: "123456",
-    });
-
-    expect(response.status).toBe(400);
-    expect(response.body.message).toBe("Usuário já cadastrado");
-  });
-
-  it("should throw a validation error if email is invalid", async () => {
-    const response = await request(app).post("/users").send({
-      name: "User",
-      email: "",
-      password: "123456",
-    });
-
-    expect(response.status).toBe(400);
-    expect(response.body.message).toBe("validation error");
+    expect(response.status).toBe(200);
+    expect(response.body.token).toEqual(expect.any(String));
   });
 });
