@@ -47,7 +47,6 @@ jest.mock("bcrypt", () => ({
 ======================= */
 
 import { app } from "@/app";
-import { prisma } from "@/database/prisma";
 import { User } from "@prisma/client";
 
 /* =======================
