@@ -55,16 +55,6 @@ import { User } from "@prisma/client";
 ======================= */
 
 describe("SessionsController", () => {
-  let user_id: string;
-
-  afterAll(async () => {
-    if (user_id) {
-      await prisma.user.delete({
-        where: { id: user_id },
-      });
-    }
-  });
-
   it("should authenticate a user and return access token", async () => {
     const uniqueEmail = `auth+${Date.now()}@example.com`;
 
@@ -73,8 +63,6 @@ describe("SessionsController", () => {
       email: uniqueEmail,
       password: "123456",
     });
-
-    user_id = userResponse.body.id;
 
     const response = await request(app).post("/sessions").send({
       email: uniqueEmail,

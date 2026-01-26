@@ -47,7 +47,6 @@ jest.mock("bcrypt", () => ({
 ======================= */
 
 import { app } from "@/app";
-import { prisma } from "@/database/prisma";
 import { User } from "@prisma/client";
 
 /* =======================
@@ -55,16 +54,6 @@ import { User } from "@prisma/client";
 ======================= */
 
 describe("UserController", () => {
-  let user_id: string;
-
-  afterAll(async () => {
-    if (user_id) {
-      await prisma.user.delete({
-        where: { id: user_id },
-      });
-    }
-  });
-
   it("should create a user", async () => {
     const uniqueEmail = `user+${Date.now()}@example.com`;
 
@@ -77,8 +66,6 @@ describe("UserController", () => {
     expect(response.status).toBe(201);
     expect(response.body).toHaveProperty("id");
     expect(response.body.name).toBe("User");
-
-    user_id = response.body.id;
   });
 
   it("should not create a user with existing email", async () => {
